@@ -16,12 +16,19 @@
           <h1>Add new participant</h1>
           <div id="anchor-notification" />
         </div>
+        <div v-if="success" class="rounded bg-green-500 text-white text-center text-lg p-4 mb-4">
+          Great! Participant sent successfully.
+        </div>
         <form
+          v-else
           id="registrationForm"
           class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
           accept-charset="UTF-8"
           @submit.prevent="handleSubmit"
         >
+          <div v-if="errored" class="rounded bg-red-200 text-lg p-4">
+            Something went wrong. :( Did you fill in all the fields?
+          </div>
           <div class="form-group mb-4">
             <label
               for="first_name"
@@ -34,6 +41,7 @@
               name="first_name"
               type="text"
               autocomplete="off"
+              required
               class="
                 shadow
                 appearance-none
@@ -56,6 +64,7 @@
               name="last_name"
               type="text"
               autocomplete="off"
+              required
               class="
                 shadow
                 appearance-none
@@ -71,13 +80,14 @@
             />
           </div>
           <div class="form-group mb-6">
-            <label for="email">Second Name</label>
+            <label for="email">E mail</label>
             <input
               id="email"
               v-model="email"
               name="email"
               type="email"
               autocomplete="off"
+              required
               class="
                 shadow
                 appearance-none
@@ -133,7 +143,7 @@ export default {
   data() {
     return {
       success: false,
-      error: false,
+      errored: false,
       first_name: "",
       last_name: "",
       email: "",
@@ -153,13 +163,14 @@ export default {
             Accept: "application/json",
           },
         })
-        .then(function (response) {
-          this.success = !!response.data.success;
+        .then( response => {
+          this.success = true;
+          this.errored = false;
           const el = document.getElementById("anchor-notification");
           el.scrollIntoView({ behavior: "smooth" });
         })
-        .catch(function (error) {
-          console.log(error);
+        .catch( error => {
+          this.errored = true;
         });
     },
   },
