@@ -34,10 +34,14 @@ const participants = [{
 ]
 
 /* GET participants listing. */
-router.get('/participants', connectApi.conferenceregistrants, function (req, res, next) {
+router.get('/participants', connectApi.conferenceregistrants, function(req, res, next) {
   // it is also posible to send the data either from BIGMARKER.FREE.BEECEPTOR API or from the participants object
   const getresponse = res.locals.getresponse
-  res.json(getresponse)
+  if (getresponse == '') {
+    res.json(participants)
+  } else {
+    res.json(getresponse)
+  }
 })
 
 /* GET participants by ID. */
