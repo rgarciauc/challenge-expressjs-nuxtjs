@@ -33,8 +33,7 @@
             <label
               for="first_name"
               class="block text-gray-700 text-sm font-bold mb-2"
-              >First Name</label
-            >
+            >First Name</label>
             <input
               id="first_name"
               v-model="first_name"
@@ -54,7 +53,7 @@
                 leading-tight
                 focus:outline-none focus:shadow-outline
               "
-            />
+            >
           </div>
           <div class="form-group mb-6">
             <label for="last_name">Second Name</label>
@@ -77,7 +76,7 @@
                 leading-tight
                 focus:outline-none focus:shadow-outline
               "
-            />
+            >
           </div>
           <div class="form-group mb-6">
             <label for="email">E mail</label>
@@ -100,7 +99,7 @@
                 leading-tight
                 focus:outline-none focus:shadow-outline
               "
-            />
+            >
           </div>
           <div class="form-group flex items-center justify-between">
             <input
@@ -115,7 +114,7 @@
               "
               type="submit"
               value="Submit"
-            />
+            >
           </div>
         </form>
       </div>
@@ -140,41 +139,41 @@
 </template>
 <script>
 export default {
-  data() {
+  data () {
     return {
       success: false,
       errored: false,
-      first_name: "",
-      last_name: "",
-      email: "",
-    };
+      first_name: '',
+      last_name: '',
+      email: ''
+    }
   },
   methods: {
-    async handleSubmit() {
+    async handleSubmit () {
       const data = {
         first_name: this.first_name,
         last_name: this.last_name,
-        email: this.email,
-      };
-      console.log("data sent: ", data);
+        email: this.email
+      }
+      console.log('data sent: ', data)
       await this.$axios
-        .$post("/api/participants/newparticipant", data, {
+        .$post('/api/participants/newparticipant', data, {
           headers: {
-            Accept: "application/json",
-          },
+            Accept: 'application/json'
+          }
         })
-        .then( response => {
-          this.success = true;
-          this.errored = false;
-          const el = document.getElementById("anchor-notification");
-          el.scrollIntoView({ behavior: "smooth" });
+        .then((response) => {
+          this.success = true
+          this.errored = false
+          const el = document.getElementById('anchor-notification')
+          el.scrollIntoView({ behavior: 'smooth' })
         })
-        .catch( error => {
-          this.errored = true;
-        });
-    },
-  },
-};
+        .catch((error) => {
+          this.errored = true
+        })
+    }
+  }
+}
 </script>
 <style scoped>
 .registration #anchor-notification {
