@@ -26,9 +26,11 @@
             <label
               for="first_name"
               class="block text-gray-700 text-sm font-bold mb-2"
-            >First Name</label>
+              >First Name</label
+            >
             <input
               id="first_name"
+              v-model="first_name"
               name="first_name"
               type="text"
               autocomplete="off"
@@ -44,12 +46,13 @@
                 leading-tight
                 focus:outline-none focus:shadow-outline
               "
-            >
+            />
           </div>
           <div class="form-group mb-6">
             <label for="last_name">Second Name</label>
             <input
               id="last_name"
+              v-model="last_name"
               name="last_name"
               type="text"
               autocomplete="off"
@@ -65,12 +68,13 @@
                 leading-tight
                 focus:outline-none focus:shadow-outline
               "
-            >
+            />
           </div>
           <div class="form-group mb-6">
             <label for="email">Second Name</label>
             <input
               id="email"
+              v-model="email"
               name="email"
               type="email"
               autocomplete="off"
@@ -86,7 +90,7 @@
                 leading-tight
                 focus:outline-none focus:shadow-outline
               "
-            >
+            />
           </div>
           <div class="form-group flex items-center justify-between">
             <input
@@ -101,7 +105,7 @@
               "
               type="submit"
               value="Submit"
-            >
+            />
           </div>
         </form>
       </div>
@@ -126,41 +130,40 @@
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return {
       success: false,
       error: false,
-      form: {
-        first_name: '',
-        last_name: '',
-        email: ''
-      }
-    }
+      first_name: "",
+      last_name: "",
+      email: "",
+    };
   },
   methods: {
-    async handleSubmit () {
-      const formData = new FormData()
-      for (const [key, value] of Object.entries(this.form)) {
-        formData.append(key, value)
-      }
-      console.log('inside of submission: ' + JSON.stringify(formData))
+    async handleSubmit() {
+      const data = {
+        first_name: this.first_name,
+        last_name: this.last_name,
+        email: this.email,
+      };
+      console.log("data sent: ", data);
       await this.$axios
-        .$post('/api/participants/newparticipant', formData, {
-          headers: { 'Content-Type': 'multipart/formdata' }
+        .$post("/api/participants/newparticipant", data, {
+          headers: {
+            Accept: "application/json",
+          },
         })
         .then(function (response) {
-          console.log(response)
-          this.success = true
-          this.error = false
-          const el = document.getElementById('anchor-notification')
-          el.scrollIntoView({ behavior: 'smooth' })
+          this.success = !!response.data.success;
+          const el = document.getElementById("anchor-notification");
+          el.scrollIntoView({ behavior: "smooth" });
         })
         .catch(function (error) {
-          console.log(error)
-        })
-    }
-  }
-}
+          console.log(error);
+        });
+    },
+  },
+};
 </script>
 <style scoped>
 .registration #anchor-notification {
