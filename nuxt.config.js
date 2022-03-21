@@ -22,9 +22,7 @@ export default {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ],
-    script: [
-      { src: 'https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp' }
-    ]
+    script: []
   },
   googleFonts: {
     families: {
@@ -40,7 +38,7 @@ export default {
      ** Global CSS
      */
   css: [
-    // './public/styles/output.css'
+     '@/assets/css/main.css',
   ],
 
   /*
@@ -60,7 +58,8 @@ export default {
      */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module'
+    '@nuxtjs/eslint-module',
+    '@nuxt/postcss8',
   ],
 
   /*
@@ -94,9 +93,8 @@ export default {
   build: {
     postcss: {
       plugins: {
-        // 'postcss-import': {},
-        // tailwindcss: {},
-        // autoprefixer: {}
+        tailwindcss: {},
+        autoprefixer: {}
       }
     }
   }

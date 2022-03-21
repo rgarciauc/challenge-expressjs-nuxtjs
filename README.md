@@ -14,7 +14,3 @@ localhost:3000
 ## Endpoint
 
 /participants
-
-## Open bugs
-
-Form
