@@ -138,6 +138,7 @@
   </section>
 </template>
 <script>
+/** https://developpaper.com/promise-axios-async-await/ */
 export default {
   data () {
     return {
@@ -145,32 +146,38 @@ export default {
       errored: false,
       first_name: '',
       last_name: '',
-      email: ''
+      email: '',
+      created_at: '',
+      academic_title: '',
+      gender: '',
+      status: ''
     }
   },
   methods: {
-    async handleSubmit () {
-      const data = {
-        first_name: this.first_name,
-        last_name: this.last_name,
-        email: this.email
-      }
-      console.log('data sent: ', data)
-      await this.$axios
-        .$post('/api/participants/newparticipant', data, {
-          headers: {
-            Accept: 'application/json'
-          }
-        })
-        .then((response) => {
-          this.success = true
-          this.errored = false
-          const el = document.getElementById('anchor-notification')
-          el.scrollIntoView({ behavior: 'smooth' })
-        })
-        .catch((error) => {
-          this.errored = true
-        })
+    handleSubmit () {
+        const data = {
+          first_name: this.first_name,
+          last_name: this.last_name,
+          email: this.email,
+          created_at: this.created_at,
+          academic_title: this.academic_title,
+          gender: this.gender,
+          status: this.status
+        }
+        console.log('data sent: ', data)
+        this.$axios
+          .$post('/api/participants/newparticipant', data, {
+            headers: {
+              Accept: 'application/json'
+            }
+          }).then((res) => {
+            this.success = true
+            this.errored = false
+            const el = document.getElementById('anchor-notification')
+            el.scrollIntoView({ behavior: 'smooth' })
+          }).catch((err)=>{
+            this.errored = true
+          })
     }
   }
 }

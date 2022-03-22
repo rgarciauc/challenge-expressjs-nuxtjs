@@ -21,7 +21,8 @@
         "express": "latest",
         "morgan": "^1.10.0",
         "nodemon": "^2.0.15",
-        "nuxt": "latest"
+        "nuxt": "latest",
+        "pg": "^8.7.3"
     },
     "devDependencies": {
         "@nuxt/postcss8": "^1.1.3",

@@ -5,8 +5,10 @@
 Install the dependencies with:
 
 ```bash
-yarn install
-yarn dev
+- yarn install
+- CREATE A DATABASE called "bigmarker"
+- Run in the console: psql -f ./api/bigmark.sql bigmarker
+- yarn dev
 ```
 
 localhost:3000
