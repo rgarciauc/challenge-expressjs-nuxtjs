@@ -79,8 +79,7 @@ router.post('/participants/newparticipant', function(req, res) {
     const sql = 'INSERT INTO participants (first_name, last_name, email, created_at, academic_title, gender, status) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *'
     pool.query(sql, [first_name, last_name, email, created_at, academic_title, gender, status], (err, result) => {
         if (err) { throw err }
-        const obj = JSON.parse(JSON.stringify(req.body))
-        res.status(201).send(obj)
+        res.status(201).send(req.body)
     })
 })
 

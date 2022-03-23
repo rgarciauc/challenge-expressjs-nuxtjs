@@ -173,6 +173,8 @@ export default {
           }).then((res) => {
             this.success = true
             this.errored = false
+            let data = JSON.stringify(res);
+            console.log(`From the server ${data}`)
             const el = document.getElementById('anchor-notification')
             el.scrollIntoView({ behavior: 'smooth' })
           }).catch((err)=>{
