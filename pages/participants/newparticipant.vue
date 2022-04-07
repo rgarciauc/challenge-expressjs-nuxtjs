@@ -155,31 +155,31 @@ export default {
   },
   methods: {
     handleSubmit () {
-        const data = {
-          first_name: this.first_name,
-          last_name: this.last_name,
-          email: this.email,
-          created_at: this.created_at,
-          academic_title: this.academic_title,
-          gender: this.gender,
-          status: this.status
-        }
-        console.log('data sent: ', data)
-        this.$axios
-          .$post('/api/participants/newparticipant', data, {
-            headers: {
-              Accept: 'application/json'
-            }
-          }).then((res) => {
-            this.success = true
-            this.errored = false
-            let data = JSON.stringify(res);
-            console.log(`From the server ${data}`)
-            const el = document.getElementById('anchor-notification')
-            el.scrollIntoView({ behavior: 'smooth' })
-          }).catch((err)=>{
-            this.errored = true
-          })
+      const data = {
+        first_name: this.first_name,
+        last_name: this.last_name,
+        email: this.email,
+        academic_title: this.academic_title,
+        gender: this.gender,
+        status: this.status
+      }
+      console.log('data sent: ', data)
+      this.$axios
+        .$post('/api/create', data, {
+          headers: {
+            Accept: 'application/json'
+          }
+        }).then((res) => {
+          this.success = true
+          this.errored = false
+          const data = JSON.stringify(res)
+          console.log(`From the server ${data}`)
+          const el = document.getElementById('anchor-notification')
+          el.scrollIntoView({ behavior: 'smooth' })
+        }).catch((err) => {
+          console.log(err)
+          this.errored = true
+        })
     }
   }
 }

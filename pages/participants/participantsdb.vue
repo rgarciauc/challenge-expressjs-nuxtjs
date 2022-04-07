@@ -325,7 +325,7 @@
 <script>
 export default {
   async asyncData ({ $axios }) {
-    const data = await $axios.$get('/api/participantsdb')
+    const data = await $axios.$get('/api/participants')
     return { participantsdb: data }
   },
   head () {

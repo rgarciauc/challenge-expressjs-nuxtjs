@@ -1,18 +1,24 @@
 # Challenge NuxtJS expressJS
 
-## Installation
+Expressjs, Postgres, nuxtjs
 
-Install the dependencies with:
+## Installation
 
 ```bash
 - yarn install
-- CREATE A DATABASE called "bigmarker"
-- Run in the console: psql -f ./api/bigmark.sql bigmarker
+- yarn nodemon
+- CREATE A Postgress DATABASE called "bigmarker"
+- Load the Schema and demo data: psql -f ./api/bigmark.sql bigmark
 - yarn dev
 ```
 
-localhost:3000
+localhost:3000 => frontEnd
+localhost:3001 => backEnd
 
-## Endpoint
+## Endpoints
 
-/participants
+/participants List participants
+/create/ Create participants
+/participants/:id Get single participant
+/participants/:id Update single participant
+/participant/:id Delete single participant

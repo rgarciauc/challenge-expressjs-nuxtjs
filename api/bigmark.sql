@@ -5,8 +5,6 @@
 -- Dumped from database version 14.2
 -- Dumped by pg_dump version 14.1
 
--- Started on 2022-03-22 13:56:02 CET
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -23,12 +21,11 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 210 (class 1259 OID 18130)
 -- Name: participants; Type: TABLE; Schema: public; Owner: garcia
 --
 
 CREATE TABLE public.participants (
-    id integer PRIMARY KEY NOT NULL,
+    id uuid NOT NULL,
     first_name character varying(30),
     last_name character varying(30),
     email character varying(30),
@@ -42,7 +39,6 @@ CREATE TABLE public.participants (
 ALTER TABLE public.participants OWNER TO garcia;
 
 --
--- TOC entry 209 (class 1259 OID 18129)
 -- Name: participants_id_seq; Type: SEQUENCE; Schema: public; Owner: garcia
 --
 
@@ -58,8 +54,6 @@ CREATE SEQUENCE public.participants_id_seq
 ALTER TABLE public.participants_id_seq OWNER TO garcia;
 
 --
--- TOC entry 3582 (class 0 OID 0)
--- Dependencies: 209
 -- Name: participants_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: garcia
 --
 
@@ -67,38 +61,19 @@ ALTER SEQUENCE public.participants_id_seq OWNED BY public.participants.id;
 
 
 --
--- TOC entry 3433 (class 2604 OID 18133)
--- Name: participants id; Type: DEFAULT; Schema: public; Owner: garcia
---
-
-ALTER TABLE ONLY public.participants ALTER COLUMN id SET DEFAULT nextval('public.participants_id_seq'::regclass);
-
-
---
--- TOC entry 3576 (class 0 OID 18130)
--- Dependencies: 210
 -- Data for Name: participants; Type: TABLE DATA; Schema: public; Owner: garcia
 --
 
 COPY public.participants (id, first_name, last_name, email, created_at, academic_title, gender, status) FROM stdin;
-1	first_name	\N	\N	\N	\N	\N	\N
-2	Ruben	Garcia Ucharima	s8rugarc@uni-saarland.de				
-3	Miguel	Royal	test@uni-saarland.de				
-4	Luis	Losa	test@test				
-5	Lucy	Schmidth	test@test.de				
-6	Liz	Rodriguez	ab@ab.com				
-7	Ricardo	Gareca	rest@pe.pe				
-8	Peter	Verstand	tmp@lo.de				
-9	Peter	Müller	mu@mu.de				
-10	Lorena	Ucharima	s8@uni-saarland.de				
-11	Lorem	Ipsum	s8@uni-saarland.de				
-12	Ruben2	Garcia Ucharima2	s8rugarc@uni-saarland.de				
+ad22131f-79a9-4aee-8256-cd261276363e	Ruben	Garcia Ucharima	s8rugarc@uni-saarland.de	2022-04-07T18:56:18.215+02:00			
+d84ba9f7-381e-4ca1-9411-329317f54a3a	Miguel	Garcia Ucharima	s8rugarc@uni-saarland.de	2022-04-08T01:15:50.804+02:00			
+41b78690-4e13-473d-83fc-ba2d07b451ae	Robert	Garcia Ucharima	s8rugarc@uni-saarland.de	2022-04-08T01:15:57.808+02:00			
+0199ac94-867c-4d40-a1ba-6b9156cc0373	Luis	Garcia Ucharima	s8rugarc@uni-saarland.de	2022-04-08T01:16:19.500+02:00			
+49c1fa47-b898-45cd-a663-93383524cac7	Edgard	Ruiz s8rugarc@uni-saarland.de	2022-04-08T01:16:52.595+02:00			
 \.
 
 
 --
--- TOC entry 3583 (class 0 OID 0)
--- Dependencies: 209
 -- Name: participants_id_seq; Type: SEQUENCE SET; Schema: public; Owner: garcia
 --
 
@@ -106,7 +81,6 @@ SELECT pg_catalog.setval('public.participants_id_seq', 12, true);
 
 
 --
--- TOC entry 3435 (class 2606 OID 18135)
 -- Name: participants participants_pkey; Type: CONSTRAINT; Schema: public; Owner: garcia
 --
 
@@ -114,9 +88,6 @@ ALTER TABLE ONLY public.participants
     ADD CONSTRAINT participants_pkey PRIMARY KEY (id);
 
 
--- Completed on 2022-03-22 13:56:02 CET
-
 --
 -- PostgreSQL database dump complete
 --
-

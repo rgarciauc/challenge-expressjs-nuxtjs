@@ -3,9 +3,9 @@ const app = express()
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 
-const participants = require('./routes/participants')
+const participants = require('./routes/participant.routes')
 const test = require('./routes/test')
-const apis = require('./routes/apis')
+//const apis = require('./routes/apis')
 
 app.use(morgan('tiny'))
 app.use(bodyParser.json())
@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // Import API Routes
 app.use(participants)
 app.use(test)
-app.use(apis)
+//app.use(apis)
 
 app.use(express.static('../public'))
     // Export express app

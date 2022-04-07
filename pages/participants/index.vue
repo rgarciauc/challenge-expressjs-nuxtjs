@@ -106,6 +106,9 @@
                     <th scope="col" class="p-4">
                       <span class="sr-only">Edit</span>
                     </th>
+                    <th scope="col" class="p-4">
+                      <span class="sr-only">Delete</span>
+                    </th>
                   </tr>
                 </thead>
                 <tbody
@@ -118,6 +121,7 @@
                   <tr
                     v-for="(participant, index) in participants"
                     :key="index"
+                    :index="index"
                     class="participant hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     <td class="p-4 w-4">
@@ -207,11 +211,15 @@
                       "
                     >
                       <nuxt-link
-                        :to="{ name: 'participants-id', params: { id: index } }"
+                        :to="{ name: 'participants-id', params: { id: participant.id } }"
                         class="text-blue-600 dark:text-blue-500 hover:underline"
                       >
                         More
                       </nuxt-link>
+                    </td>
+                    <td>
+                      <!-- `/delete/${participant.id}` -->
+                      <span @click="deleteParticipant(participant.id, index)">x</span>
                     </td>
                   </tr>
                 </tbody>
@@ -324,13 +332,36 @@
 
 <script>
 export default {
-  async asyncData ({ $axios }) {
-    const data = await $axios.$get('/api/participants')
-    return { participants: data }
+  asyncData ({ $axios }) {
+    return $axios.$get('/api/participants')
+      .then((res) => {
+        console.log({ participants: res.data })
+        return { participants: res.data }
+      })
+      .catch(e =>
+        console.log('Error by listing participants: ', e)
+      )
+  },
+  data () {
+    return {
+      participants: {}
+    }
   },
   head () {
     return {
       title: 'Participants'
+    }
+  },
+  methods: {
+    deleteParticipant (id, index) {
+      console.log('val passed from the row', index)
+      this.$axios.delete(`/api/participant/${id}`)
+        .then((res) => {
+          this.participants.splice(index, 1)
+          console.log(`deleted ${res.data.data}`)
+        }).catch((err) => {
+          console.log('something went wrong axios: ' + err)
+        })
     }
   }
 }

@@ -35,10 +35,16 @@ export default {
     return $axios
       .$get('/api/participants/' + params.id)
       .then((res) => {
-        return { participant: res }
+        if (res.message) {
+          console.log(res.message)
+        }
+        if (res.data === undefined) {
+          throw 'Data for this participant is empty'
+        }
+        return { participant: res.data }
       })
       .catch((e) => {
-        error({ statusCode: 404, message: 'Participant not found' })
+        error({ statusCode: 404, message: e })
       })
   },
   head () {
