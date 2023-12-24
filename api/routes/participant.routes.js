@@ -9,35 +9,9 @@ const participantController = require('../controllers/participant.controller')
 */
 
 router.post('/create/', participantController.createUser)
-router.get('/participants/:id', participantController.getUser)
-router.get('/participants', participantController.getUsers)
-router.put('/participants/:id', participantController.updateUser)
+router.get('/participants/:id', participantController.getUser) // ok
+router.get('/participants', participantController.getUsers) // ok
+router.put('/settings/profile', participantController.updateUser)
 router.delete('/participant/:id', participantController.deleteUser)
-
-router.get('/participantsdb/:id', function(req, res, next) {
-    const id = parseInt(req.params.id)
-    const sql = 'SELECT * FROM participants WHERE id = $1'
-    pool.query(sql, [id], (err, result) => {
-        if (err) {
-            throw err
-        }
-        res.status(200).json(result.rows)
-    })
-})
-
-/** put */
-router.put('/participantsupdate/:id', function(req, res) {
-    const id = parseInt(req.params.id)
-    const { first_name, email } = req.body
-    const sql = 'UPDATE participants SET first_name = $1, email = $2 WHERE id = $3'
-    pool.query(sql, [first_name, email, id], (err, result) => {
-        if (err) {
-            throw err
-        }
-        res.status(200).send(`User modified with ID: ${id}`)
-    })
-})
-
-/** https://blog.logrocket.com/nodejs-expressjs-postgresql-crud-rest-api-example/ */
 
 module.exports = router

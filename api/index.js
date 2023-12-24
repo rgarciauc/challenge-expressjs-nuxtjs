@@ -1,18 +1,18 @@
 const express = require('express')
 const app = express()
-const bodyParser = require('body-parser')
 const morgan = require('morgan')
+const morganBody = require('morgan-body')
 
 const participants = require('./routes/participant.routes')
-const test = require('./routes/test')
+const test = require('./routes/test.routes')
 //const apis = require('./routes/apis')
 
 app.use(morgan('tiny'))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded())
+app.use(express.json())
+app.use(express.urlencoded())
     // in latest body-parser use like below.
-app.use(bodyParser.urlencoded({ extended: true }))
-
+app.use(express.urlencoded({ extended: true }))
+morganBody(app)
 // Import API Routes
 app.use(participants)
 app.use(test)

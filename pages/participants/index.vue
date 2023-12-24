@@ -344,7 +344,7 @@ export default {
   },
   data () {
     return {
-      participants: {}
+      participants: []
     }
   },
   head () {
@@ -356,9 +356,9 @@ export default {
     deleteParticipant (id, index) {
       console.log('val passed from the row', index)
       this.$axios.delete(`/api/participant/${id}`)
-        .then((res) => {
+        .then(() => {
           this.participants.splice(index, 1)
-          console.log(`deleted ${res.data.data}`)
+          console.log(`deleted ${id}`)
         }).catch((err) => {
           console.log('something went wrong axios: ' + err)
         })

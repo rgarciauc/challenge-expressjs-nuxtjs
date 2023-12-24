@@ -30,76 +30,13 @@
             Something went wrong. :( Did you fill in all the fields?
           </div>
           <div class="form-group mb-4">
-            <label
-              for="first_name"
-              class="block text-gray-700 text-sm font-bold mb-2"
-            >First Name</label>
-            <input
-              id="first_name"
-              v-model="first_name"
-              name="first_name"
-              type="text"
-              autocomplete="off"
-              required
-              class="
-                shadow
-                appearance-none
-                border
-                rounded
-                w-full
-                py-2
-                px-3
-                text-gray-700
-                leading-tight
-                focus:outline-none focus:shadow-outline
-              "
-            >
-          </div>
-          <div class="form-group mb-6">
-            <label for="last_name">Second Name</label>
-            <input
-              id="last_name"
-              v-model="last_name"
-              name="last_name"
-              type="text"
-              autocomplete="off"
-              required
-              class="
-                shadow
-                appearance-none
-                border
-                rounded
-                w-full
-                py-2
-                px-3
-                text-gray-700
-                leading-tight
-                focus:outline-none focus:shadow-outline
-              "
-            >
-          </div>
-          <div class="form-group mb-6">
-            <label for="email">E mail</label>
-            <input
-              id="email"
-              v-model="email"
-              name="email"
-              type="email"
-              autocomplete="off"
-              required
-              class="
-                shadow
-                appearance-none
-                border
-                rounded
-                w-full
-                py-2
-                px-3
-                text-gray-700
-                leading-tight
-                focus:outline-none focus:shadow-outline
-              "
-            >
+            <div v-if="FormFields">
+              <FormGroup
+                v-for="(item, index) in FormFields"
+                :key="index"
+                :block="item"
+              />
+            </div>
           </div>
           <div class="form-group flex items-center justify-between">
             <input
@@ -138,30 +75,75 @@
   </section>
 </template>
 <script>
+import FormGroup from '~/components/block/FormGroup'
 /** https://developpaper.com/promise-axios-async-await/ */
 export default {
+  components: {
+    FormGroup
+  },
   data () {
     return {
+      FormFields: [
+        {
+          label: {
+            text: 'First Name',
+            for: 'first_name'
+          },
+          input: {
+            id: 'first_name',
+            model: 'first_name',
+            name: 'first_name',
+            value: 'this is a test',
+            type: 'text',
+            autocomplete: 'off',
+            required: 'true'
+          }
+        },
+        {
+          label: {
+            text: 'Second Name',
+            for: 'second_name'
+          },
+          input: {
+            id: 'second_name',
+            model: 'second_name',
+            name: 'second_name',
+            value: '',
+            type: 'text',
+            autocomplete: 'off',
+            required: 'true'
+          }
+        },
+        {
+          label: {
+            text: 'Email',
+            for: 'email'
+          },
+          input: {
+            id: 'email',
+            model: 'email',
+            name: 'email',
+            value: '',
+            type: 'email',
+            autocomplete: 'off',
+            required: 'true'
+          }
+        }
+      ],
       success: false,
-      errored: false,
-      first_name: '',
-      last_name: '',
-      email: '',
-      created_at: '',
-      academic_title: '',
-      gender: '',
-      status: ''
+      errored: false
     }
   },
   methods: {
     handleSubmit () {
+      console.log('Submit clicked')
       const data = {
-        first_name: this.first_name,
-        last_name: this.last_name,
-        email: this.email,
-        academic_title: this.academic_title,
-        gender: this.gender,
-        status: this.status
+        first_name: this.FormFields[0].input.value,
+        last_name: this.FormFields[1].input.value,
+        email: this.FormFields[2].input.value,
+        academic_title: this.FormFields[3].input.value,
+        gender: this.FormFields[4].input.value,
+        status: this.FormFields[5].input.value
       }
       console.log('data sent: ', data)
       this.$axios

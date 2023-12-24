@@ -20,6 +20,7 @@
         "body-parser": "^1.19.2",
         "express": "latest",
         "morgan": "^1.10.0",
+        "morgan-body": "^2.6.6",
         "nodemon": "^2.0.15",
         "nuxt": "latest",
         "pg": "^8.7.3"

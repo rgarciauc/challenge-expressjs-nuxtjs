@@ -19,8 +19,13 @@
 <script>
 export default {
   async asyncData ({ $axios }) {
-    const res = await $axios.$get('/api/test')
-    return { res }
+    try {
+      const res = await $axios.$get('/api/test')
+      return { res }
+    } catch (error) {
+      console.error('Error fetching data:', error)
+      return { res: null } // Or handle the error as required
+    }
   }
 }
 </script>
