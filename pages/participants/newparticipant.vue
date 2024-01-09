@@ -35,6 +35,9 @@
                 v-for="(item, index) in FormFields"
                 :key="index"
                 :block="item"
+                :value="formData[item.input.model]"
+                @input="updateFieldValue(index, $event)"
+                @update-form-data="updateFormData"
               />
             </div>
           </div>
@@ -93,7 +96,7 @@ export default {
             id: 'first_name',
             model: 'first_name',
             name: 'first_name',
-            value: 'this is a test',
+            value: '',
             type: 'text',
             autocomplete: 'off',
             required: 'true'
@@ -101,13 +104,13 @@ export default {
         },
         {
           label: {
-            text: 'Second Name',
-            for: 'second_name'
+            text: 'Last Name',
+            for: 'last_name'
           },
           input: {
-            id: 'second_name',
-            model: 'second_name',
-            name: 'second_name',
+            id: 'last_name',
+            model: 'last_name',
+            name: 'last_name',
             value: '',
             type: 'text',
             autocomplete: 'off',
@@ -128,8 +131,61 @@ export default {
             autocomplete: 'off',
             required: 'true'
           }
+        },
+        {
+          label: {
+            text: 'Academic Title',
+            for: 'academic_title'
+          },
+          input: {
+            id: 'academic_title',
+            model: 'academic_title',
+            name: 'academic_title',
+            value: '',
+            type: 'text',
+            autocomplete: 'off',
+            required: 'true'
+          }
+        },
+        {
+          label: {
+            text: 'Gender',
+            for: 'gender'
+          },
+          input: {
+            id: 'gender',
+            model: 'gender',
+            name: 'gender',
+            value: '',
+            type: 'text',
+            autocomplete: 'off',
+            required: 'true'
+          }
+        },
+        {
+          label: {
+            text: 'Status',
+            for: 'status'
+          },
+          input: {
+            id: 'status',
+            model: 'status',
+            name: 'status',
+            value: '',
+            type: 'text',
+            autocomplete: 'off',
+            required: 'true'
+          }
         }
       ],
+      formData: {
+        first_name: '',
+        last_name: '',
+        email: '',
+        academic_title: '',
+        gender: '',
+        status: ''
+      },
       success: false,
       errored: false
     }
@@ -137,14 +193,7 @@ export default {
   methods: {
     handleSubmit () {
       console.log('Submit clicked')
-      const data = {
-        first_name: this.FormFields[0].input.value,
-        last_name: this.FormFields[1].input.value,
-        email: this.FormFields[2].input.value,
-        academic_title: this.FormFields[3].input.value,
-        gender: this.FormFields[4].input.value,
-        status: this.FormFields[5].input.value
-      }
+      const data = { ...this.formData }
       console.log('data sent: ', data)
       this.$axios
         .$post('/api/create', data, {
@@ -162,6 +211,12 @@ export default {
           console.log(err)
           this.errored = true
         })
+    },
+    updateFieldValue (index, value) {
+      this.$set(this.formData, this.FormFields[index].input.model, value)
+    },
+    updateFormData (data) {
+      this.$set(this.formData, Object.keys(data)[0], Object.values(data)[0])
     }
   }
 }

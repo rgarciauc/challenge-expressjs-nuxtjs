@@ -5,8 +5,9 @@ Expressjs, Postgres, nuxtjs
 ## Installation
 
 ```bash
-- yarn install
+- yarn dev
 - yarn nodemon
+
 - CREATE A Postgress DATABASE called "bigmarker"
 - Load the Schema and demo data: psql -f ./api/bigmark.sql bigmark
 - yarn dev

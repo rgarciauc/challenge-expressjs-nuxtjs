@@ -5,9 +5,6 @@
       <h1 class="text-center text-6xl font-normal leading-normal mt-0 mb-4">
         Testing NuxtJS - expressJS
       </h1>
-      <div class="py-8">
-        {{ res }}
-      </div>
       <div class="">
         <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded " href="/participants">
           Participants List
@@ -18,14 +15,5 @@
 </template>
 <script>
 export default {
-  async asyncData ({ $axios }) {
-    try {
-      const res = await $axios.$get('/api/test')
-      return { res }
-    } catch (error) {
-      console.error('Error fetching data:', error)
-      return { res: null } // Or handle the error as required
-    }
-  }
 }
 </script>

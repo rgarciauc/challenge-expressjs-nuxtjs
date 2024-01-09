@@ -1,6 +1,5 @@
 <template>
   <section>
-    {{ block }}
     <label
       class="block text-gray-700 text-sm font-bold mb-2"
       for="block.label.for"
@@ -9,7 +8,6 @@
     </label>
     <input
       :id=block.input.id
-      :value="value"
       :name="block.input.name"
       :type="block.input.type"
       :autocomplete="block.input.autocomplete"
@@ -44,6 +42,7 @@ export default {
   methods: {
     updateValue (value) {
       this.$emit('input', value)
+      this.$emit('update-form-data', { [this.block.input.model]: value })
     }
   }
 }

@@ -1,26 +1,31 @@
 const axios = require('axios')
 const pool = require('./../db.js')
-const userService = require('../services/participant.service')
 const { randomUUID } = require('crypto')
 const { rows } = require('pg/lib/defaults')
 /** Read and write data from the DB */
 /** https://blog.logrocket.com/nodejs-expressjs-postgresql-crud-rest-api-example/ */
 
-exports.createUser = async function(req, res, next){ 
+exports.createUser = async function(req, res, next){ //ok
     let id = randomUUID()
     let created_at= new Date()
     console.log('createUser function', req.body)
     const { first_name, last_name, email, academic_title, gender, status } = req.body
-    const sql = `INSERT INTO participants (id, first_name, last_name, email, created_at, academic_title, gender, status) 
+
+    const checkUserQuery = `SELECT * FROM participants WHERE email = $1`
+    const existingUser = await pool.query(checkUserQuery, [email])
+    if (existingUser.rows.length > 0){
+        return res.status(400).json({message: 'User already exist'})
+    }
+    const insertUserQuery = `INSERT INTO participants (id, first_name, last_name, email, created_at, academic_title, gender, status) 
     VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`
     /** TODO:Does the user exist? */
-    pool.query(sql, [id, first_name, last_name, email, created_at, academic_title, gender, status], (err, result) => {
+    pool.query(insertUserQuery, [id, first_name, last_name, email, created_at, academic_title, gender, status], (err, result) => {
         if (err) { throw err }
         res.status(201).send(req.body)
     })
 }
 
-exports.getUsers = async function(req, res, next){
+exports.getUsers = async function(req, res, next){ //ok
     const sql = 'SELECT * FROM participants ORDER BY id ASC'
     try {
         pool.query(sql, (err, result) => {
@@ -36,11 +41,11 @@ exports.getUsers = async function(req, res, next){
     
 }
 
-exports.getUser = async function (req, res, next){
+exports.getUser = async function (req, res, next){ //ok
     /** TODO:Find participant */
     /** TODO: If the participant does not exist return 400 otherwise the program crash*/
     /** TODO:Return specific participant */
-    const sql = `SELECT * from participants WHERE id = $1`
+    const sql = 'SELECT * from participants WHERE id = $1'
     try {
         pool.query(sql, [req.params.id], (err, result) => {
             if(Array.isArray(result.rows) & result.rows.length){
@@ -55,7 +60,7 @@ exports.getUser = async function (req, res, next){
     }
 }
 
-exports.updateUser = async function (req, res, next){
+exports.updateUser = async function (req, res, next){ //ok
     /** TODO:Find participant */
     /** TODO:Does the participant all the required fields? */
     /** TODO:Update data */
@@ -84,11 +89,11 @@ exports.updateUser = async function (req, res, next){
     
 }
 
-exports.deleteUser = async function (req, res, next){
+exports.deleteUser = async function (req, res, next){ //ok
     const participant_id = req.params.id
-    const sql ='DELETE FROM participants WHERE id = $1'
+    const deleteUserSql ='DELETE FROM participants WHERE id = $1'
     try{
-        pool.query(sql, [participant_id], (err, result) => {
+        pool.query(deleteUserSql, [participant_id], (err, result) => {
             res.status(201).json({ status: 201, data: participant_id, message: `${req.params.id} was deleted` })
         })
     }catch(err){
